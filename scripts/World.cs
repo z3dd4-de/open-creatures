@@ -35,10 +35,9 @@ public partial class World : Node2D
         _foodContainer = GetNodeOrNull<Node2D>("FoodContainer") ?? this;
         _statusLabel   = GetNodeOrNull<Label>("HUD/StatusLabel");
 
-        // Signals verbinden (für Biochemie-Updates)
-        //Signals.Instance.BiochemChanged += UpdateLabel;
-
         SpawnFood();
+
+        _creature.WorldHalfSize = WorldHalfSize;
 
         GD.Print($"[World] Welt bereit. Größe: {WorldHalfSize * 2}");
     }

@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b56ql30lmd2ei" path="res://images/cat/RunLeft/Run (7)_L.png" id="18_jx1n3"]
 [ext_resource type="Texture2D" uid="uid://dhp6rvfantfwb" path="res://images/cat/RunLeft/Run (8)_L.png" id="19_013tf"]
 [ext_resource type="Texture2D" uid="uid://dwesomi7pnqol" path="res://images/cat/SleepLeft/Sleep (1)_L.png" id="20_38wb3"]
+[ext_resource type="Texture2D" uid="uid://clmhbii4spndv" path="res://images/cat/SleepLeft/Sleep (2)_L.png" id="21_difa8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sawcq"]
 animations = [{
@@ -55,7 +56,7 @@ animations = [{
 "texture": ExtResource("11_difa8")
 }],
 "loop": true,
-"name": &"idle_left",
+"name": &"idle",
 "speed": 10.0
 }, {
 "frames": [{
@@ -84,7 +85,7 @@ animations = [{
 "texture": ExtResource("19_013tf")
 }],
 "loop": true,
-"name": &"run_left",
+"name": &"run",
 "speed": 5.0
 }, {
 "frames": [{
@@ -92,32 +93,33 @@ animations = [{
 "texture": ExtResource("20_38wb3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_38wb3")
+"texture": ExtResource("21_difa8")
 }],
 "loop": true,
-"name": &"sleep_left",
-"speed": 5.0
+"name": &"sleep",
+"speed": 2.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t0i1i"]
-radius = 148.0
-height = 460.0
+radius = 159.99997
+height = 519.99994
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_etika"]
-radius = 74.00676
+radius = 100.04499
 
-[node name="Creature" type="CharacterBody2D" unique_id=699507104 node_paths=PackedStringArray("Animation")]
+[node name="Creature" type="CharacterBody2D" unique_id=699507104]
 script = ExtResource("1_30bw7")
-Animation = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=977832874]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_sawcq")
-animation = &"sleep_left"
+animation = &"sleep"
+frame = 1
+frame_progress = 0.58463234
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1653339896]
-position = Vector2(3.0000036, 0)
-scale = Vector2(0.2, 0.2)
+position = Vector2(3.0000033, 0)
+scale = Vector2(0.19999999, 0.19999999)
 shape = SubResource("CapsuleShape2D_t0i1i")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1673938268]
