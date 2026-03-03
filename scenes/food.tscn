@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cx4hflef6yr3s"]
+
+[ext_resource type="Texture2D" uid="uid://bjrg1fclt6st0" path="res://images/food/fish_fillet.png" id="1_af40f"]
+[ext_resource type="Script" uid="uid://dfwrbgteeo70r" path="res://scripts/Food.cs" id="2_370ap"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qjm1k"]
+radius = 8.0
+
+[node name="Area2D" type="Area2D" unique_id=2131898328]
+script = ExtResource("2_370ap")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1560583773]
+shape = SubResource("CircleShape2D_qjm1k")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=554670096]
+texture = ExtResource("1_af40f")

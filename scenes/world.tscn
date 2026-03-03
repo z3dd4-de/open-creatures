@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dtf5pg7v7pgum"]
+
+[ext_resource type="Script" uid="uid://8c3uqlkkn12t" path="res://scripts/World.cs" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://cx4hflef6yr3s" path="res://scenes/food.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://dh0d0aq1l2fdq" path="res://scenes/creature.tscn" id="3_4wyf3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k0juu"]
+size = Vector2(1194, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_71j4m"]
+size = Vector2(23, 676)
+
+[node name="World" type="Node2D" unique_id=2004383488]
+script = ExtResource("1_nnsk1")
+FoodScene = ExtResource("2_rwgxs")
+FoodCount = 10
+WorldHalfSize = Vector2(550, 300)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1969126180]
+position = Vector2(7, -2)
+
+[node name="Creature" parent="." unique_id=699507104 instance=ExtResource("3_4wyf3")]
+position = Vector2(7, 3)
+
+[node name="FoodContainer" type="Node2D" parent="." unique_id=773899179]
+
+[node name="WallTop" type="StaticBody2D" parent="." unique_id=2036648086]
+position = Vector2(-571, -324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallTop" unique_id=1382040625]
+position = Vector2(571, -5)
+shape = SubResource("RectangleShape2D_k0juu")
+
+[node name="WallBottom" type="StaticBody2D" parent="." unique_id=702644512]
+position = Vector2(-571, 326)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBottom" unique_id=542629938]
+position = Vector2(571, -5)
+shape = SubResource("RectangleShape2D_k0juu")
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1286106473]
+position = Vector2(-571, -324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft" unique_id=106439805]
+position = Vector2(1.5, 328)
+shape = SubResource("RectangleShape2D_71j4m")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=1556996411]
+position = Vector2(580, -324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=839801116]
+position = Vector2(1.5, 328)
+shape = SubResource("RectangleShape2D_71j4m")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=711605768]
+
+[node name="StatusLabel" type="Label" parent="HUD" unique_id=1760904304]
+offset_right = 40.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 22
