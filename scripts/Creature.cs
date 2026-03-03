@@ -20,7 +20,7 @@ public partial class Creature : CharacterBody2D
 
     [Export] public float MoveSpeed        = 80f;
     [Export] public float SensorRadius     = 200f;
-    [Export] public bool  DebugBrainOutput = false;
+    [Export] public bool  DebugBrainOutput = true;
 
     // Weltgrenzen – werden von World.cs gesetzt
     public Vector2 WorldHalfSize = new Vector2(320f, 200f);
@@ -62,8 +62,19 @@ public partial class Creature : CharacterBody2D
         Genome.Randomize(_brain);
         Genome.ApplyToBiochem(Biochem);
 
+        // Eindeutigen Namen generieren und als Label anzeigen
+        //string creatureName = Name; // Godot setzt den Node-Namen automatisch (z.B. "Creature", "Creature2", "Creature3")
+        //if (GetNodeOrNull<Label>("NameLabel") is Label nameLabel)
+        //    nameLabel.Text = creatureName;
+
         GD.Print($"[Creature] Initialisiert. Genom-Länge: {Genome.TotalLength} Gene");
         GD.Print($"[Creature] Biochemie:\n{Genome.BiochemDebugString()}");
+    }
+
+    public void RefreshNameLabel()
+    {
+        if (GetNodeOrNull<Label>("NameLabel") is Label nameLabel)
+            nameLabel.Text = Name;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -322,6 +333,10 @@ public partial class Creature : CharacterBody2D
         Genome = genome;
         genome.ApplyToNetwork(_brain);
         genome.ApplyToBiochem(Biochem);
+
+        // Name jetzt korrekt, da World ihn vor Initialize() gesetzt hat
+        if (GetNodeOrNull<Label>("NameLabel") is Label nameLabel)
+            nameLabel.Text = Name;
     }
 
     // ── Hilfsmethoden ─────────────────────────────────────────────────────────

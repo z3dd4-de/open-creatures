@@ -12,6 +12,7 @@ size = Vector2(23, 676)
 
 [node name="World" type="Node2D" unique_id=2004383488]
 script = ExtResource("1_nnsk1")
+CreatureScene = ExtResource("3_4wyf3")
 FoodScene = ExtResource("2_rwgxs")
 FoodCount = 10
 WorldHalfSize = Vector2(550, 300)
@@ -20,7 +21,8 @@ WorldHalfSize = Vector2(550, 300)
 position = Vector2(7, -2)
 
 [node name="Creature" parent="." unique_id=699507104 instance=ExtResource("3_4wyf3")]
-position = Vector2(7, 3)
+
+[node name="Creature2" parent="." unique_id=722471008 instance=ExtResource("3_4wyf3")]
 
 [node name="FoodContainer" type="Node2D" parent="." unique_id=773899179]
 

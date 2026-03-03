@@ -30,7 +30,7 @@ public class Biochemistry
     // Konfigurierbare Raten (später aus Genom)
     public float HungerRate     = 0.008f;  // wie schnell Hunger steigt
     public float TirednessRate  = 0.005f;  // wie schnell Müdigkeit steigt
-    public float SexDriveRate   = 0.004f;  // Aufbaurate Sexualtrieb
+    public float SexDriveRate   = 0.015f;  // Aufbaurate Sexualtrieb (war 0.004 → zu langsam)
     public float DecayRate      = 0.003f;  // allg. Zerfall von Reward/Punishment
     public float SleepHealRate  = 0.04f;   // wie schnell Schlaf Müdigkeit abbaut
 
@@ -50,11 +50,12 @@ public class Biochemistry
         // Reaktionen definieren
         _reactions = new List<ChemicalReaction>
         {
-            // Glucose wird in Nährstoffspeicher umgewandelt (wenn viel Glucose da)
+            // Glucose wird in Nährstoffspeicher umgewandelt – nur wenn wirklich viel da ist.
+            // Rate war 0.05f → hat Glucose dauerhaft unter 0.4 gehalten → SexDrive konnte nie steigen.
             new() {
                 Reactant1 = ChemID.Glucose,
                 Product   = ChemID.NutrientStore,
-                Rate      = 0.05f
+                Rate      = 0.01f  // deutlich gedrosselt
             },
             // Nährstoffspeicher wird mobilisiert wenn Glucose knapp
             // (wird manuell in Tick() behandelt, da bedingungsabhängig)
@@ -88,7 +89,7 @@ public class Biochemistry
     {
         // Glucose sinkt passiv (Grundumsatz) – weniger im Schlaf
         float isAsleep  = State.Get(ChemID.IsAsleep);
-        float burnRate  = Mathf.Lerp(0.006f, 0.002f, isAsleep); // wach vs. schlafend
+        float burnRate  = Mathf.Lerp(0.001f, 0.003f, isAsleep); // wach vs. schlafend
         State.Add(ChemID.Glucose, -burnRate * delta);
 
         // Falls Glucose knapp: Nährstoffspeicher mobilisieren
@@ -150,19 +151,25 @@ public class Biochemistry
 
     private void HandleSexDrive(float delta)
     {
-        // Sexualtrieb steigt nur wenn ausgeruht UND gut ernährt
         float tired    = State.Get(ChemID.Tiredness);
         float glucose  = State.Get(ChemID.Glucose);
         float isAsleep = State.Get(ChemID.IsAsleep);
 
-        bool wellFed   = glucose > 0.5f;
-        bool notTired  = tired < 0.4f;
-        bool awake     = isAsleep < 0.5f;
+        // Aufbau-Faktor: ab Glucose > 0.3 (war 0.4 → zu hoch wegen Reaction-Drain)
+        float wellFedFactor  = Mathf.Clamp(glucose * 2f - 0.6f, 0f, 1f);   // ab Glucose > 0.3
+        float restedFactor   = Mathf.Clamp(1f - tired * 1.5f, 0f, 1f);
+        float awakeFactor    = isAsleep < 0.5f ? 1f : 0f;
 
-        if (wellFed && notTired && awake)
-            State.Add(ChemID.SexDrive, SexDriveRate * delta);
+        float growthFactor   = wellFedFactor * restedFactor * awakeFactor;
+
+        if (growthFactor > 0f)
+        {
+            State.Add(ChemID.SexDrive, SexDriveRate * growthFactor * delta);
+        }
         else
-            State.Add(ChemID.SexDrive, -SexDriveRate * 0.5f * delta); // langsam abfallen
+        {
+            State.Add(ChemID.SexDrive, -SexDriveRate * 0.2f * delta);
+        }
     }
 
     private void ApplyReactions(float delta)

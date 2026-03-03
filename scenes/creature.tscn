@@ -101,11 +101,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t0i1i"]
-radius = 159.99997
-height = 519.99994
+radius = 170.12
+height = 580.00006
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_etika"]
-radius = 100.04499
+radius = 84.00595
 
 [node name="Creature" type="CharacterBody2D" unique_id=699507104]
 script = ExtResource("1_30bw7")
@@ -126,3 +126,19 @@ shape = SubResource("CapsuleShape2D_t0i1i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=426286519]
 shape = SubResource("CircleShape2D_etika")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1846520133]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -59.0
+offset_right = 17.0
+offset_bottom = -41.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 12
+text = "Test"
+horizontal_alignment = 1

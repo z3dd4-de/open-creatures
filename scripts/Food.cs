@@ -9,7 +9,7 @@ namespace Creatures;
 /// </summary>
 public partial class Food : Area2D
 {
-    [Export] public float NutritionValue = 0.4f;
+    [Export] public float NutritionValue = 0.6f;
     [Export] public Vector2 SpawnArea    = new Vector2(300f, 200f); // Hälfte der Ausdehnung
 
     // Wird aufgerufen wenn das Wesen die Nahrung berührt
